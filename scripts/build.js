@@ -1,7 +1,10 @@
-const { build, context } = require('esbuild');
-const sveltePlugin = require('esbuild-svelte');
-const sveltePreprocess = require('svelte-preprocess');
-// import { preprocessMeltUI, sequence } from '@melt-ui/pp';
+import { build, context } from 'esbuild';
+import sveltePlugin from 'esbuild-svelte';
+import sveltePreprocess from 'svelte-preprocess';
+import sassPlugin from 'esbuild-plugin-sass';
+import postCssPlugin from 'esbuild-style-plugin';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 const isProdBuild = process.argv.includes('--prod');
 const watch = process.argv.includes('--watch');
@@ -20,8 +23,26 @@ async function main() {
     drop: isProdBuild ? ['console'] : undefined,
     mainFields: ['svelte', 'module', 'main', 'browser'],
     conditions: ['svelte', 'browser'],
+    loader: {
+      '.ts': 'ts',
+      '.js': 'jsx',
+      '.svg': 'dataurl',
+      '.html': 'text'
+    },
+    alias: {
+      $lib: './src/lib',
+      '$lib/components': './src/lib/components'
+    },
+    logLevel: 'info',
 
     plugins: [
+      sassPlugin(),
+      postCssPlugin({
+        postcss: {
+          plugins: [tailwindcss, autoprefixer]
+        }
+      }),
+
       sveltePlugin({
         preprocess: sveltePreprocess()
       })

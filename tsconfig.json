@@ -14,7 +14,11 @@
     "resolveJsonModule": true,
     "importsNotUsedAsValues": "remove",
     "jsx": "react",
-    "types": ["svelte"]
+    "types": ["svelte"],
+    "paths": {
+      "$lib": ["./src/lib"],
+      "$lib/*": ["./src/lib/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "dist/*"]
