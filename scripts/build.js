@@ -1,7 +1,7 @@
 const { build, context } = require('esbuild');
 const sveltePlugin = require('esbuild-svelte');
 const sveltePreprocess = require('svelte-preprocess');
-import { preprocessMeltUI, sequence } from '@melt-ui/pp';
+// import { preprocessMeltUI, sequence } from '@melt-ui/pp';
 
 const isProdBuild = process.argv.includes('--prod');
 const watch = process.argv.includes('--watch');
@@ -23,7 +23,7 @@ async function main() {
 
     plugins: [
       sveltePlugin({
-        preprocess: sequence([sveltePreprocess(), preprocessMeltUI()])
+        preprocess: sveltePreprocess()
       })
     ]
   };
