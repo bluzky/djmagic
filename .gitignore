@@ -1,9 +1,9 @@
 # macOS
 .DS_Store
 
-# web
-**/node_modules
-Extension/dist
+#
+node_modules
+dist
 
 # safari
 **/xcdebugger
