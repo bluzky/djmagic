@@ -1,6 +1,7 @@
 const { build, context } = require('esbuild');
 const sveltePlugin = require('esbuild-svelte');
 const sveltePreprocess = require('svelte-preprocess');
+import { preprocessMeltUI, sequence } from '@melt-ui/pp';
 
 const isProdBuild = process.argv.includes('--prod');
 const watch = process.argv.includes('--watch');
@@ -16,7 +17,15 @@ async function main() {
     sourcemap: !isProdBuild,
     minify: isProdBuild,
     tsconfig: './tsconfig.json',
-    drop: isProdBuild ? ['console'] : undefined
+    drop: isProdBuild ? ['console'] : undefined,
+    mainFields: ['svelte', 'module', 'main', 'browser'],
+    conditions: ['svelte', 'browser'],
+
+    plugins: [
+      sveltePlugin({
+        preprocess: sequence([sveltePreprocess(), preprocessMeltUI()])
+      })
+    ]
   };
 
   if (watch) {
@@ -29,39 +38,21 @@ async function main() {
   const contentJob = {
     ...commonConfig,
     entryPoints: ['./src/content.ts'],
-    outfile: './dist/content.js',
-    mainFields: ['svelte', 'module', 'main', 'browser'],
-    plugins: [
-      sveltePlugin({
-        preprocess: sveltePreprocess()
-      })
-    ]
+    outfile: './dist/content.js'
   };
 
   const popupJob = {
     ...commonConfig,
     entryPoints: ['./src/popup/popup.ts'],
     outbase: './src/popup',
-    outdir: './dist',
-    mainFields: ['svelte', 'module', 'main', 'browser'],
-    plugins: [
-      sveltePlugin({
-        preprocess: sveltePreprocess()
-      })
-    ]
+    outdir: './dist'
   };
 
   const settingsJob = {
     ...commonConfig,
     entryPoints: ['./src/settings/settings.ts'],
     outbase: './src/settings',
-    outdir: './dist',
-    mainFields: ['svelte', 'module', 'main', 'browser'],
-    plugins: [
-      sveltePlugin({
-        preprocess: sveltePreprocess()
-      })
-    ]
+    outdir: './dist'
   };
 
   const allJobs = [contentJob, popupJob, settingsJob];
