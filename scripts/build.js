@@ -29,10 +29,6 @@ async function main() {
       '.svg': 'dataurl',
       '.html': 'text'
     },
-    alias: {
-      $lib: './src/lib',
-      '$lib/components': './src/lib/components'
-    },
     logLevel: 'info',
 
     plugins: [
