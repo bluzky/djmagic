@@ -16,8 +16,6 @@
   "author": "bluzky",
   "license": "MIT",
   "devDependencies": {
-    "@skeletonlabs/skeleton": "^2.10.2",
-    "@skeletonlabs/tw-plugin": "^0.4.0",
     "@tsconfig/svelte": "^5.0.0",
     "@types/webextension-polyfill": "^0.10.0",
     "autoprefixer": "^10.4.20",
@@ -32,8 +30,6 @@
     "prettier-plugin-svelte": "^2.10.1",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "svelte-preprocess": "^5.0.4",
-    "tailwind-merge": "^2.5.2",
-    "tailwind-variants": "^0.2.1",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.1.6",
     "zip-local": "^0.3.5"
